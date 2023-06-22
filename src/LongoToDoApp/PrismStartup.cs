@@ -11,9 +11,9 @@ namespace LongoToDoApp
 	{
 		public static void Configure(PrismAppBuilder builder)
 		{
-			builder.RegisterTypes(RegisterTypes).OnAppStart(navigation =>
+			builder.RegisterTypes(RegisterTypes).OnAppStart(async (start) =>
 			{
-				navigation.CreateBuilder().AddNavigationPage().AddSegment(nameof(ToDoItemsView)).Navigate();
+				await start.NavigateAsync(nameof(ToDoItemsView));
 			});
 			builder.ConfigureServices(ConfigureServices);
 		}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="LongoToDoApp.Views.ToDoItemsView"
+    x:Name="_toDoItemsPage"
+    Title="{Binding Title}">
+    
+    <Grid
+        RowDefinitions="Auto, *, Auto">
+        <Ellipse
+            Grid.Row="0"
+            Fill="#FAE06F"
+            HeightRequest="600"
+            Margin="0,-400,0,0"
+            WidthRequest="700"/>
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="Auto, *"
+            Margin="20,0"
+            RowDefinitions="*">
+            <Image
+                Grid.Column="0"
+                Grid.Row="0"
+                Aspect="AspectFit"
+                HeightRequest="70"
+                Source="emoji.png"/>
+            <StackLayout
+                Grid.Column="1"
+                Grid.Row="0"
+                Margin="10, 0, 0, 0"
+                VerticalOptions="Center">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="30"
+                    Text="Hello Enrique"
+                    VerticalOptions="Center" />
+                <Label
+                    FontSize="15"
+                    TextColor="#696969">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="You have " />
+                            <Span
+                                Text="{Binding NumberItems}" />
+                            <Span
+                                Text=" " />
+                            <Span
+                                Text="pending task/s" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </Grid>
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding ToDoItems}"
+            Margin="20,20">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        RowDefinitions="Auto">
+                        <CheckBox
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Color="Black"
+                            VerticalOptions="Center" />
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            FontSize="20"
+                            Text="{Binding Name}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Grid.Row="2"
+            BackgroundColor="#19C0B8"
+            Command="{Binding NavigateToCreateItemCommand}"
+            CornerRadius="0"
+            Text="New"
+            VerticalOptions="EndAndExpand" />
+    </Grid>
+</ContentPage>
