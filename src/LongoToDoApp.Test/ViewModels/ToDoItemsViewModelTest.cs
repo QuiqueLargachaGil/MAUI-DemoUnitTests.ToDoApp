@@ -15,7 +15,6 @@ namespace LongoToDoApp.Test.ViewModels
 
         public ToDoItemsViewModelTest()
         {
-			NavigationService = new Mock<IAppNavigationService>();
 			DialogService = new Mock<IPageDialogService>();
 
 			_toDoItemsService = new Mock<IToDoItemsService>();
@@ -24,7 +23,7 @@ namespace LongoToDoApp.Test.ViewModels
 			_sut = new ToDoItemsViewModel(DialogService.Object, _toDoItemsService.Object);
 		}
 
-		protected Mock<IAppNavigationService> NavigationService { get; }
+		
 		protected Mock<IPageDialogService> DialogService { get; }
 
 		[Fact]
