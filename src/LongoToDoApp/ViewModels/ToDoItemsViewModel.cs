@@ -2,7 +2,10 @@
 using LongoToDoApp.Infrastructure.Mappers;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
 using LongoToDoApp.Models;
+using LongoToDoApp.Services.Abstractions;
+using LongoToDoApp.Settings;
 using LongoToDoApp.ViewModels.Base;
+using LongoToDoApp.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -10,13 +13,16 @@ namespace LongoToDoApp.ViewModels
 {
 	public class ToDoItemsViewModel : BaseViewModel
 	{
-        private readonly IToDoItemsService _toDoItemsService;
+		private readonly IAppNavigationService _navigationService;
+		private readonly IToDoItemsService _toDoItemsService;
 
-        public ToDoItemsViewModel(IPageDialogService dialogService, IToDoItemsService toDoItemsService) : base(dialogService)
+        public ToDoItemsViewModel(IPageDialogService dialogService, IAppNavigationService navigationService, IToDoItemsService toDoItemsService) : base(dialogService)
         {
             _toDoItemsService = toDoItemsService;
+			_navigationService = navigationService;
 
 			CheckedCommand = new Command(Checked);
+			NavigateToCreateItemCommand = new Command(async () => await NavigateToCreateItem());
 		}
 
         public override async Task OnNavigatedImplementation(INavigationParameters parameters)
@@ -26,6 +32,7 @@ namespace LongoToDoApp.ViewModels
         }
 
 		public ICommand CheckedCommand { get; }
+		public ICommand NavigateToCreateItemCommand { get; }
 
 		private ObservableCollection<ToDoItem> _toDoItems;
         public ObservableCollection<ToDoItem> ToDoItems
@@ -45,7 +52,7 @@ namespace LongoToDoApp.ViewModels
         {
             try
             {
-				var request = new ToDoItemsRequest("http://10.0.2.2:8080");
+				var request = new ToDoItemsRequest(Configuration.BaseUrl);
 				var response = await _toDoItemsService.GetToDoItems(request);
 				var toDoItems = BackendToModelMapper.GetToDoItems(response);
 
@@ -61,6 +68,11 @@ namespace LongoToDoApp.ViewModels
 		private void Checked()
 		{
 			NumberItems = ToDoItems.Where(x => x.IsComplete == false).Count();
+		}
+
+		private async Task NavigateToCreateItem()
+		{
+			await _navigationService.NavigateTo(nameof(CreateItemView));
 		}
 	}
 }

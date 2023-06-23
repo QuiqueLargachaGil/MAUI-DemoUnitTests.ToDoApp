@@ -20,17 +20,17 @@ namespace LongoToDoApp.Test.Converter
         public void Convert_Should_Returns_Grey_If_Value_Is_True()
         {
             // Act
-            var result = _sut.Convert(true, typeof(bool), null, CultureInfo.CurrentCulture);
+            var result = _sut.Convert(value: true, typeof(bool), null, CultureInfo.CurrentCulture);
 
             // Assert
             result.Should().BeEquivalentTo(_grey);
         }
 
 		[Fact]
-		public void Convert_Should_Returns_Black_If_Value_Is_True()
+		public void Convert_Should_Returns_Black_If_Value_Is_False()
 		{
 			// Act
-			var result = _sut.Convert(false, typeof(bool), null, CultureInfo.CurrentCulture);
+			var result = _sut.Convert(value: false, typeof(bool), null, CultureInfo.CurrentCulture);
 
 			// Assert
 			result.Should().BeEquivalentTo(_black);

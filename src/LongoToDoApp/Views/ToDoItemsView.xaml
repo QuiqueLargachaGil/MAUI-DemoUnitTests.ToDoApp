@@ -15,7 +15,7 @@
     </ContentPage.Resources>
 
     <Grid
-        RowDefinitions="Auto,*">
+        RowDefinitions="Auto,*,Auto">
         <Ellipse
             Grid.Row="0"
             Fill="#FAE06F"
@@ -95,5 +95,12 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button
+            Grid.Row="2"
+            BackgroundColor="#19C0B8"
+            Command="{Binding NavigateToCreateItemCommand}"
+            CornerRadius="0"
+            Text="New"
+            VerticalOptions="EndAndExpand" />
     </Grid>
 </ContentPage>

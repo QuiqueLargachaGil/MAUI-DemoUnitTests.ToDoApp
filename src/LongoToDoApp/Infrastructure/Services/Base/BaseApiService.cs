@@ -2,6 +2,7 @@
 using LongoToDoApp.Services.Abstractions;
 using Newtonsoft.Json;
 using System.Net;
+using System.Text;
 
 namespace LongoToDoApp.Infrastructure.Services.Base
 {
@@ -27,11 +28,17 @@ namespace LongoToDoApp.Infrastructure.Services.Base
 
 			using (var client = GetHttpClient())
 			{
+				var serializedRequest = JsonConvert.SerializeObject(request);
+				var httpContent = new StringContent(serializedRequest, Encoding.UTF8, "application/json");
+
 				HttpResponseMessage response;
 				switch (httpMethod)
 				{
 					case HttpMethod method when method == HttpMethod.Get:
 						response = await client.GetAsync(url);
+						break;
+					case HttpMethod method when method == HttpMethod.Post:
+						response = await client.PostAsync(url, httpContent);
 						break;
 					default:
 						throw new ArgumentException($"{nameof(httpMethod)} should be HttpMethod.Get or HttpMethod.Post");

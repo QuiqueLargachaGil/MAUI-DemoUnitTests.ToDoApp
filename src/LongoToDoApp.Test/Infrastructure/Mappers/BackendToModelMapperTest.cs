@@ -2,7 +2,6 @@
 using LongoToDoApp.Infrastructure.Mappers;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
 using System.Collections;
-using Moq;
 
 namespace LongoToDoApp.Test.Infrastructure.Mappers
 {
