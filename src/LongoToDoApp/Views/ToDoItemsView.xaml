@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="LongoToDoApp.Views.ToDoItemsView"
+    x:Name="_toDoItemsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:LongoToDoApp.Converters;assembly=LongoToDoApp"
+    xmlns:prism="http://prismlibrary.com">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToTextColorConverter
+                x:Key="boolToTextColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        RowDefinitions="Auto,*">
+        <Ellipse
+            Grid.Row="0"
+            Fill="#FAE06F"
+            HeightRequest="600"
+            Margin="0,-400,0,0"
+            WidthRequest="700"/>
+        <Grid
+            Grid.Row="0"
+            ColumnDefinitions="Auto,*"
+            Margin="20,0"
+            RowDefinitions="*">
+            <Image
+                Grid.Column="0"
+                Grid.Row="0"
+                Aspect="AspectFit"
+                HeightRequest="70"
+                Source="emoji.png"/>
+            <StackLayout
+                Grid.Column="1"
+                Grid.Row="0"
+                Margin="10,0,0,0"
+                VerticalOptions="Center">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="30"
+                    Text="Hello Username"
+                    VerticalOptions="Center" />
+                <Label
+                    FontSize="15"
+                    TextColor="#696969">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span
+                                Text="You have " />
+                            <Span
+                                Text="{Binding NumberItems}" />
+                            <Span
+                                Text=" " />
+                            <Span
+                                Text="pending task/s" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </Grid>
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{Binding ToDoItems}"
+            Margin="20,20"
+            SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid
+                        ColumnDefinitions="Auto,*"
+                        RowDefinitions="Auto">
+                        <CheckBox
+                            x:Name="chkIsComplete"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Color="#696969"
+                            IsChecked="{Binding IsComplete}"
+                            VerticalOptions="Center">
+                            <CheckBox.Behaviors>
+                                <prism:EventToCommandBehavior
+                                    EventName="CheckedChanged"
+                                    Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"/>
+                            </CheckBox.Behaviors>
+                        </CheckBox>
+                        <Label
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            FontSize="20"
+                            Text="{Binding Name}"
+                            TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
