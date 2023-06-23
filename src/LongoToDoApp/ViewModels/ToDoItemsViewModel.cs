@@ -3,7 +3,6 @@ using LongoToDoApp.Infrastructure.Mappers;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
 using LongoToDoApp.Models;
 using LongoToDoApp.ViewModels.Base;
-using LongoToDoApp.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -11,15 +10,11 @@ namespace LongoToDoApp.ViewModels
 {
 	public class ToDoItemsViewModel : BaseViewModel
 	{
-        private readonly INavigationService _navigationService;
         private readonly IToDoItemsService _toDoItemsService;
 
-        public ToDoItemsViewModel(IPageDialogService dialogService, INavigationService navigationService, IToDoItemsService toDoItemsService) : base(dialogService)
+        public ToDoItemsViewModel(IPageDialogService dialogService, IToDoItemsService toDoItemsService) : base(dialogService)
         {
-            _navigationService = navigationService;
             _toDoItemsService = toDoItemsService;
-
-			NavigateToCreateItemCommand = new Command(async () => await NavigateToCreateItem());
         }
 
         public override async Task OnNavigatedImplementation(INavigationParameters parameters)
@@ -27,8 +22,6 @@ namespace LongoToDoApp.ViewModels
             await base.OnNavigatedImplementation(parameters);
             await LoadData();
         }
-
-		public ICommand NavigateToCreateItemCommand { get; }
 
 		private ObservableCollection<ToDoItem> _toDoItems;
         public ObservableCollection<ToDoItem> ToDoItems
@@ -60,10 +53,5 @@ namespace LongoToDoApp.ViewModels
                 await HandleException(exception);
             }
         }
-
-        private async Task NavigateToCreateItem()
-        {
-            await _navigationService.NavigateAsync(nameof(CreateItemView));
-		}
 	}
 }
