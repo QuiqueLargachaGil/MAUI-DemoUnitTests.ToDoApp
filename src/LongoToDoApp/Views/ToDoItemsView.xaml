@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="LongoToDoApp.Views.ToDoItemsView"
     x:Name="_toDoItemsPage"
-    Title="{Binding Title}">
-    
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:LongoToDoApp.Converters;assembly=LongoToDoApp"
+    xmlns:prism="http://prismlibrary.com">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToTextColorConverter
+                x:Key="boolToTextColorConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <Grid
-        RowDefinitions="Auto, *, Auto">
+        RowDefinitions="Auto,*">
         <Ellipse
             Grid.Row="0"
             Fill="#FAE06F"
@@ -16,7 +24,7 @@
             WidthRequest="700"/>
         <Grid
             Grid.Row="0"
-            ColumnDefinitions="Auto, *"
+            ColumnDefinitions="Auto,*"
             Margin="20,0"
             RowDefinitions="*">
             <Image
@@ -28,12 +36,12 @@
             <StackLayout
                 Grid.Column="1"
                 Grid.Row="0"
-                Margin="10, 0, 0, 0"
+                Margin="10,0,0,0"
                 VerticalOptions="Center">
                 <Label
                     FontAttributes="Bold"
                     FontSize="30"
-                    Text="Hello Enrique"
+                    Text="Hello Username"
                     VerticalOptions="Center" />
                 <Label
                     FontSize="15"
@@ -56,33 +64,36 @@
         <CollectionView
             Grid.Row="1"
             ItemsSource="{Binding ToDoItems}"
-            Margin="20,20">
+            Margin="20,20"
+            SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid
-                        ColumnDefinitions="Auto, *"
+                        ColumnDefinitions="Auto,*"
                         RowDefinitions="Auto">
                         <CheckBox
+                            x:Name="chkIsComplete"
                             Grid.Column="0"
                             Grid.Row="0"
-                            Color="Black"
-                            VerticalOptions="Center" />
+                            Color="#696969"
+                            IsChecked="{Binding IsComplete}"
+                            VerticalOptions="Center">
+                            <CheckBox.Behaviors>
+                                <prism:EventToCommandBehavior
+                                    EventName="CheckedChanged"
+                                    Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"/>
+                            </CheckBox.Behaviors>
+                        </CheckBox>
                         <Label
                             Grid.Column="1"
                             Grid.Row="0"
                             FontSize="20"
                             Text="{Binding Name}"
+                            TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
                             VerticalOptions="Center" />
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button
-            Grid.Row="2"
-            BackgroundColor="#19C0B8"
-            Command="{Binding NavigateToCreateItemCommand}"
-            CornerRadius="0"
-            Text="New"
-            VerticalOptions="EndAndExpand" />
     </Grid>
 </ContentPage>

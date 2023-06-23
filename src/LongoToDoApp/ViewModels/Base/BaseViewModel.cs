@@ -18,7 +18,7 @@ namespace LongoToDoApp.ViewModels.Base
 
 		public void OnNavigatedFrom(INavigationParameters parameters)
 		{
-			//throw new NotImplementedException();
+
 		}
 
 		public void OnNavigatedTo(INavigationParameters parameters)

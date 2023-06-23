@@ -15,13 +15,17 @@ namespace LongoToDoApp.ViewModels
         public ToDoItemsViewModel(IPageDialogService dialogService, IToDoItemsService toDoItemsService) : base(dialogService)
         {
             _toDoItemsService = toDoItemsService;
-        }
+
+			CheckedCommand = new Command(Checked);
+		}
 
         public override async Task OnNavigatedImplementation(INavigationParameters parameters)
         {
             await base.OnNavigatedImplementation(parameters);
             await LoadData();
         }
+
+		public ICommand CheckedCommand { get; }
 
 		private ObservableCollection<ToDoItem> _toDoItems;
         public ObservableCollection<ToDoItem> ToDoItems
@@ -53,5 +57,10 @@ namespace LongoToDoApp.ViewModels
                 await HandleException(exception);
             }
         }
+
+		private void Checked()
+		{
+			NumberItems = ToDoItems.Where(x => x.IsComplete == false).Count();
+		}
 	}
 }

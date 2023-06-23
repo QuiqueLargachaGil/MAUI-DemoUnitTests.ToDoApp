@@ -31,7 +31,7 @@ namespace LongoToDoApp.Infrastructure.Services.Base
 				switch (httpMethod)
 				{
 					case HttpMethod method when method == HttpMethod.Get:
-						response = await client.GetAsync(url);//.ConfigureAwait(false);
+						response = await client.GetAsync(url);
 						break;
 					default:
 						throw new ArgumentException($"{nameof(httpMethod)} should be HttpMethod.Get or HttpMethod.Post");
