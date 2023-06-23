@@ -21,7 +21,7 @@ namespace LongoToDoApp.Test.ViewModels
 			_toDoItemsService = new Mock<IToDoItemsService>();
 			_toDoItemsService.Setup(m => m.GetToDoItems(It.IsAny<ToDoItemsRequest>())).ReturnsAsync(GetResponse());
 
-			_sut = new ToDoItemsViewModel(DialogService.Object, NavigationService.Object, _toDoItemsService.Object);
+			_sut = new ToDoItemsViewModel(DialogService.Object, _toDoItemsService.Object);
 		}
 
 		protected Mock<IAppNavigationService> NavigationService { get; }
