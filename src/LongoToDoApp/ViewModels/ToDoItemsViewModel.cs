@@ -22,7 +22,7 @@ namespace LongoToDoApp.ViewModels
 			_navigationService = navigationService;
 
 			DeleteItemCommand = new Command<ToDoItem>(async (itemSelected) => await DeleteItem(itemSelected));
-			CheckedCommand = new Command(Checked);
+			CheckedCommand = new Command<ToDoItem>(async (selectedItem) => await Checked(selectedItem));
 			NavigateToCreateItemCommand = new Command(async () => await NavigateToCreateItem());
 		}
 
@@ -86,9 +86,24 @@ namespace LongoToDoApp.ViewModels
 			}
         }
 
-		private void Checked()
+		private async Task Checked(ToDoItem selectedItem)
 		{
-			NumberItems = ToDoItems.Where(x => x.IsComplete == false).Count();
+			try
+			{
+				if (selectedItem is null)
+				{
+					return;
+				}
+
+				NumberItems = ToDoItems.Where(x => x.IsComplete == false).Count();
+
+				var request = new UpdateItemRequest(Configuration.BaseUrl, selectedItem);
+				await _toDoItemsService.UpdateItem(request);
+			}
+			catch (Exception exception)
+			{
+				await HandleException(exception);
+			}
 		}
 
 		private async Task NavigateToCreateItem()

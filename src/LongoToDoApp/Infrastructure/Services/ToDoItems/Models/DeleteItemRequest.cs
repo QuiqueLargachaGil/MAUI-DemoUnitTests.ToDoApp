@@ -4,11 +4,11 @@ namespace LongoToDoApp.Infrastructure.Services.ToDoItems.Models
 {
 	public class DeleteItemRequest : BaseRequest
 	{
-		public DeleteItemRequest(string baseUrl, string id) : base(baseUrl)
+		public DeleteItemRequest(string baseUrl, string key) : base(baseUrl)
 		{
-			Id = id;
+			Key = key;
 		}
 
-		public string Id { get; }
+		public string Key { get; }
 	}
 }

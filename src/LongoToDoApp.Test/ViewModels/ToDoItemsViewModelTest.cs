@@ -3,6 +3,7 @@ using LongoToDoApp.Infrastructure.Abstractions;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
 using LongoToDoApp.Models;
 using LongoToDoApp.Services.Abstractions;
+using LongoToDoApp.Settings;
 using LongoToDoApp.ViewModels;
 using Moq;
 using Newtonsoft.Json;
@@ -74,6 +75,27 @@ namespace LongoToDoApp.Test.ViewModels
 		}
 
 		[Fact]
+		public void DeleteItemCommand_Should_Call_ToDoItemService_DeleteItem_Method_With_Expected_Request()
+		{
+			// Arrange
+			DialogService.Setup(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+
+			var selectedItem = GetItem();
+
+			DeleteItemRequest request = null;
+			_toDoItemsService.Setup(m => m.DeleteItem(It.IsAny<DeleteItemRequest>())).Callback<DeleteItemRequest>(r => request = r);
+
+			var expectedRequest = GetDeleteItemExpectedRequest();
+
+			// Act
+			_sut.DeleteItemCommand.Execute(selectedItem);
+
+			// Assert
+			request.Should().BeEquivalentTo(expectedRequest);
+			_toDoItemsService.Verify(m => m.DeleteItem(It.IsAny<DeleteItemRequest>()));
+		}
+
+		[Fact]
 		public void DeleteItemCommand_Should_Display_Alert_If_The_Item_Have_Been_Correctly_Removed()
 		{
 			// Arrange
@@ -87,15 +109,51 @@ namespace LongoToDoApp.Test.ViewModels
 			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
 		}
 
+		[Fact]
+		public void CheckedCommand_Should_Handle_Exceptions()
+		{
+			// Arrange
+			DialogService.Setup(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+			_toDoItemsService.Setup(m => m.UpdateItem(It.IsAny<UpdateItemRequest>())).ThrowsAsync(new Exception());
+
+			// Act
+			_sut.DeleteItemCommand.Execute(null);
+
+			// Assert
+			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
+		}
+
+		[Theory]
+		[ClassData(typeof(ToDoItemsListTestData))]
+		public void CheckedCommand_Should_Call_ToDoItemService_UpdateItem_Method_With_Expected_Request(IEnumerable<ToDoItem> toDoItemsList)
+		{
+			// Arrange
+			var selectedItem = GetItem();
+			_sut.ToDoItems = new ObservableCollection<ToDoItem>(toDoItemsList);
+
+			UpdateItemRequest request = null;
+			_toDoItemsService.Setup(m => m.UpdateItem(It.IsAny<UpdateItemRequest>())).Callback<UpdateItemRequest>(r => request = r);
+
+			var expectedRequest = GetUpdateItemExpectedRequest();
+
+			// Act
+			_sut.CheckedCommand.Execute(selectedItem);
+
+			// Assert
+			request.Should().BeEquivalentTo(expectedRequest);
+			_toDoItemsService.Verify(m => m.UpdateItem(It.IsAny<UpdateItemRequest>()));
+		}
+
 		[Theory]
 		[ClassData(typeof(ToDoItemsListTestData))]
 		public void CheckedCommand_Should_Returns_The_Number_Of_Task_Incompletes(IEnumerable<ToDoItem> toDoItemsList)
 		{
 			// Assert
+			var selectedItem = GetItem();
 			_sut.ToDoItems = new ObservableCollection<ToDoItem>(toDoItemsList);
 
 			// Act
-			_sut.CheckedCommand.Execute(null);
+			_sut.CheckedCommand.Execute(selectedItem);
 
 			// Assert
 			_sut.NumberItems.Should().Be(4);
@@ -108,10 +166,30 @@ namespace LongoToDoApp.Test.ViewModels
 			NavigationService.Setup(m => m.NavigateTo(It.IsAny<string>(), It.IsAny<INavigationParameters>()));
 
 			// Act
-			_sut.NavigateToCreateItemCommand.Execute(It.IsAny<INavigationParameters>());
+			_sut.NavigateToCreateItemCommand.Execute(null);
 
 			// Assert
 			NavigationService.Verify(m => m.NavigateTo("CreateItemView", It.IsAny<INavigationParameters>()));
+		}
+
+		private static ToDoItem GetItem()
+		{
+			return new ToDoItem
+			{
+				Key = nameof(ToDoItem.Key),
+				Name = nameof(ToDoItem.Name),
+				IsComplete = true,
+			};
+		}
+
+		private static DeleteItemRequest GetDeleteItemExpectedRequest()
+		{
+			return new DeleteItemRequest(Configuration.BaseUrl, nameof(DeleteItemRequest.Key));
+		}
+
+		private static UpdateItemRequest GetUpdateItemExpectedRequest()
+		{
+			return new UpdateItemRequest(Configuration.BaseUrl, GetItem());
 		}
 
 		private static List<ToDoItemsResponse> GetResponse()
