@@ -4,11 +4,11 @@ namespace LongoToDoApp.ViewModels.Base
 {
 	public class BaseViewModel : BindableBase, IInitializeAsync, INavigatedAware
 	{
-		private readonly IPageDialogService _dialogService;
+		private readonly IPageDialogService _dialogsService;
 
-        public BaseViewModel(IPageDialogService dialogService)
+        public BaseViewModel(IPageDialogService dialogsService)
         {
-            _dialogService = dialogService;
+            _dialogsService = dialogsService;
         }
 
         public virtual async Task InitializeAsync(INavigationParameters parameters)
@@ -50,21 +50,26 @@ namespace LongoToDoApp.ViewModels.Base
 			switch (exception)
 			{
 				case NoInternetException:
-					await _dialogService.DisplayAlertAsync("Alert", exception.Message, "Ok");
+					await DisplayAlert("Alert", exception.Message, "Ok");
 					break;
 				case BadRequestException:
-					await _dialogService.DisplayAlertAsync("Alert", exception.Message, "Ok");
+					await DisplayAlert("Alert", exception.Message, "Ok");
 					break;
 				case ServiceUnavailableException:
-					await _dialogService.DisplayAlertAsync("Alert", exception.Message, "Ok");
+					await DisplayAlert("Alert", exception.Message, "Ok");
 					break;
 				case ApiException:
-					await _dialogService.DisplayAlertAsync("Alert", exception.Message, "Ok");
+					await DisplayAlert("Alert", exception.Message, "Ok");
 					break;
 				default:
-					await _dialogService.DisplayAlertAsync("Alert", exception.Message, "Ok");
+					await DisplayAlert("Alert", exception.Message, "Ok");
 					break;
 			}
+		}
+
+		protected async Task<bool> DisplayAlert(string title, string message, string cancelButtonTitle, string acceptButtonTitle = null)
+		{
+			return await _dialogsService.DisplayAlertAsync(title, message, acceptButtonTitle, cancelButtonTitle);
 		}
 	}
 }

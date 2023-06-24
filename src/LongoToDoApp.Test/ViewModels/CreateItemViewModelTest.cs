@@ -62,7 +62,7 @@ namespace LongoToDoApp.Test.ViewModels
 			_sut.CreateNewItemCommand.Execute(null);
 
 			// Assert
-			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
 		}
 
 

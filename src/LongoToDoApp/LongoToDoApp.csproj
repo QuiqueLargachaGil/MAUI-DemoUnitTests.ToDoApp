@@ -51,6 +51,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\back_arrow_icon.png" />
 	  <None Remove="Resources\Images\emoji.png" />
+	  <None Remove="Resources\Images\trash_icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>

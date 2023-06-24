@@ -56,7 +56,35 @@ namespace LongoToDoApp.Test.ViewModels
 			await _sut.OnNavigatedImplementation(null);
 
 			// Assert
-			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
+		}
+
+		[Fact]
+		public void DeleteItemCommand_Should_Handle_Exceptions()
+		{
+			// Arrange
+			DialogService.Setup(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+			_toDoItemsService.Setup(m => m.DeleteItem(It.IsAny<DeleteItemRequest>())).ThrowsAsync(new Exception());
+
+			// Act
+			_sut.DeleteItemCommand.Execute(null);
+
+			// Assert
+			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
+		}
+
+		[Fact]
+		public void DeleteItemCommand_Should_Display_Alert_If_The_Item_Have_Been_Correctly_Removed()
+		{
+			// Arrange
+			DialogService.Setup(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(true);
+			_toDoItemsService.Setup(m => m.DeleteItem(It.IsAny<DeleteItemRequest>()));
+
+			// Act
+			_sut.DeleteItemCommand.Execute(null);
+
+			// Assert
+			DialogService.Verify(m => m.DisplayAlertAsync(It.IsAny<string>(), It.IsAny<string>(), null, It.IsAny<string>()));
 		}
 
 		[Theory]

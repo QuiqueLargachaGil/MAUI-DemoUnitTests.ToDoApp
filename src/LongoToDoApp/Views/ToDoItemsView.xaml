@@ -68,30 +68,52 @@
             SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid
-                        ColumnDefinitions="Auto,*"
-                        RowDefinitions="Auto">
-                        <CheckBox
-                            x:Name="chkIsComplete"
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Color="#696969"
-                            IsChecked="{Binding IsComplete}"
-                            VerticalOptions="Center">
-                            <CheckBox.Behaviors>
-                                <prism:EventToCommandBehavior
-                                    EventName="CheckedChanged"
-                                    Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"/>
-                            </CheckBox.Behaviors>
-                        </CheckBox>
-                        <Label
-                            Grid.Column="1"
-                            Grid.Row="0"
-                            FontSize="20"
-                            Text="{Binding Name}"
-                            TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
-                            VerticalOptions="Center" />
-                    </Grid>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItemView
+                                Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference _toDoItemsPage}}"
+                                CommandParameter="{Binding .}"
+                                WidthRequest="120">
+                                <HorizontalStackLayout
+                                    BackgroundColor="#FF5555"
+                                    Padding="10,5">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        Source="trash_icon.png" />
+                                    <Label
+                                        FontSize="20"
+                                        Margin="5,0,0,0"
+                                        Text="Delete"
+                                        TextColor="White"
+                                        VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </SwipeItemView>
+                        </SwipeView.RightItems>
+                        <Grid
+                            ColumnDefinitions="Auto,*"
+                            RowDefinitions="Auto">
+                            <CheckBox
+                                x:Name="chkIsComplete"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Color="#696969"
+                                IsChecked="{Binding IsComplete}"
+                                VerticalOptions="Center">
+                                <CheckBox.Behaviors>
+                                    <prism:EventToCommandBehavior
+                                        EventName="CheckedChanged"
+                                        Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"/>
+                                </CheckBox.Behaviors>
+                            </CheckBox>
+                            <Label
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                FontSize="20"
+                                Text="{Binding Name}"
+                                TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

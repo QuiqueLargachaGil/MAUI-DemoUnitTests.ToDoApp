@@ -7,5 +7,7 @@ namespace LongoToDoApp.Infrastructure.Abstractions
 		Task<List<ToDoItemsResponse>> GetToDoItems(ToDoItemsRequest request);
 
 		Task<List<ToDoItemsResponse>> AddItem(AddItemRequest request);
+
+		Task DeleteItem(DeleteItemRequest request);
 	}
 }

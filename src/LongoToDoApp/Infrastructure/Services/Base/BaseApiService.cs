@@ -28,8 +28,7 @@ namespace LongoToDoApp.Infrastructure.Services.Base
 
 			using (var client = GetHttpClient())
 			{
-				var serializedRequest = JsonConvert.SerializeObject(request);
-				var httpContent = new StringContent(serializedRequest, Encoding.UTF8, "application/json");
+				
 
 				HttpResponseMessage response;
 				switch (httpMethod)
@@ -38,10 +37,15 @@ namespace LongoToDoApp.Infrastructure.Services.Base
 						response = await client.GetAsync(url);
 						break;
 					case HttpMethod method when method == HttpMethod.Post:
+						var serializedRequest = JsonConvert.SerializeObject(request);
+						var httpContent = new StringContent(serializedRequest, Encoding.UTF8, "application/json");
 						response = await client.PostAsync(url, httpContent);
 						break;
+					case HttpMethod method when method == HttpMethod.Delete:
+						response = await client.DeleteAsync(url);
+						break;
 					default:
-						throw new ArgumentException($"{nameof(httpMethod)} should be HttpMethod.Get or HttpMethod.Post");
+						throw new ArgumentException($"{nameof(httpMethod)} should be HttpMethod.Get, HttpMethod.Post or HttpMethod.Delete");
 				}
 
 				if (!response.IsSuccessStatusCode)
