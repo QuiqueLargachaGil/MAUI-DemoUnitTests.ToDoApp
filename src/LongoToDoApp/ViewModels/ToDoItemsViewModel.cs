@@ -21,6 +21,7 @@ namespace LongoToDoApp.ViewModels
             _toDoItemsService = toDoItemsService;
 			_navigationService = navigationService;
 
+			RefreshCommand = new Command(async () => await Refresh());
 			DeleteItemCommand = new Command<ToDoItem>(async (itemSelected) => await DeleteItem(itemSelected));
 			CheckedCommand = new Command<ToDoItem>(async (selectedItem) => await Checked(selectedItem));
 			NavigateToCreateItemCommand = new Command(async () => await NavigateToCreateItem());
@@ -32,7 +33,8 @@ namespace LongoToDoApp.ViewModels
             await LoadData();
         }
 
-        public ICommand DeleteItemCommand { get; }
+		public ICommand RefreshCommand { get; }
+		public ICommand DeleteItemCommand { get; }
 		public ICommand CheckedCommand { get; }
 		public ICommand NavigateToCreateItemCommand { get; }
 
@@ -67,7 +69,14 @@ namespace LongoToDoApp.ViewModels
             }
         }
 
-        private async Task DeleteItem(ToDoItem selectedItem)
+		private async Task Refresh()
+		{
+			IsBusy = true;
+			await LoadData();
+			IsBusy = false;
+		}
+
+		private async Task DeleteItem(ToDoItem selectedItem)
         {
 			try
 			{

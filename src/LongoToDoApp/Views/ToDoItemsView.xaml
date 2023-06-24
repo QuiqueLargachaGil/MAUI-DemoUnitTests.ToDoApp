@@ -61,63 +61,67 @@
                 </Label>
             </StackLayout>
         </Grid>
-        <CollectionView
+        <RefreshView
             Grid.Row="1"
-            ItemsSource="{Binding ToDoItems}"
-            Margin="20,20"
-            SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItemView
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsBusy}">
+            <CollectionView
+                ItemsSource="{Binding ToDoItems}"
+                Margin="20,20"
+                SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItemView
                                 Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference _toDoItemsPage}}"
                                 CommandParameter="{Binding .}"
                                 WidthRequest="120">
-                                <HorizontalStackLayout
+                                    <HorizontalStackLayout
                                     BackgroundColor="#FF5555"
                                     Padding="10,5">
-                                    <Image
+                                        <Image
                                         Aspect="AspectFill"
                                         Source="trash_icon.png" />
-                                    <Label
+                                        <Label
                                         FontSize="20"
                                         Margin="5,0,0,0"
                                         Text="Delete"
                                         TextColor="White"
                                         VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
-                            </SwipeItemView>
-                        </SwipeView.RightItems>
-                        <Grid
+                                    </HorizontalStackLayout>
+                                </SwipeItemView>
+                            </SwipeView.RightItems>
+                            <Grid
                             ColumnDefinitions="Auto,*"
                             RowDefinitions="Auto">
-                            <CheckBox
+                                <CheckBox
                                 x:Name="chkIsComplete"
                                 Grid.Column="0"
                                 Grid.Row="0"
                                 Color="#696969"
                                 IsChecked="{Binding IsComplete}"
                                 VerticalOptions="Center">
-                                <CheckBox.Behaviors>
-                                    <prism:EventToCommandBehavior
+                                    <CheckBox.Behaviors>
+                                        <prism:EventToCommandBehavior
                                         EventName="CheckedChanged"
                                         Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"
                                         CommandParameter="{Binding .}"/>
-                                </CheckBox.Behaviors>
-                            </CheckBox>
-                            <Label
+                                    </CheckBox.Behaviors>
+                                </CheckBox>
+                                <Label
                                 Grid.Column="1"
                                 Grid.Row="0"
                                 FontSize="20"
                                 Text="{Binding Name}"
                                 TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
                                 VerticalOptions="Center" />
-                        </Grid>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
         <Button
             Grid.Row="2"
             BackgroundColor="#19C0B8"

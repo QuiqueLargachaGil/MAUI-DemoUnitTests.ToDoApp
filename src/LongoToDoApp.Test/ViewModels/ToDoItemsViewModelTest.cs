@@ -61,6 +61,21 @@ namespace LongoToDoApp.Test.ViewModels
 		}
 
 		[Fact]
+		public void RefreshCommand_Should_LoadData()
+		{
+			// Act
+			_sut.RefreshCommand.Execute(null);
+
+			//Assert
+			_toDoItemsService.Verify(m => m.GetToDoItems(It.IsAny<ToDoItemsRequest>()));
+
+			_sut.ToDoItems.Should().HaveCount(2);
+			_sut.ToDoItems.First().Name.Should().Be("Name");
+			_sut.ToDoItems.First().IsComplete.Should().BeTrue();
+			_sut.NumberItems.Should().Be(1);
+		}
+
+		[Fact]
 		public void DeleteItemCommand_Should_Handle_Exceptions()
 		{
 			// Arrange
