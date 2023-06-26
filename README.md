@@ -2,8 +2,10 @@
 
 ToDoApp is an application developed with .Net MAUI and Prism MAUI to learn about both, MAUI and Prism framework. ToDoApp ables to his users to list ToDo items in order to help keeping his lifes organized. Create your tasks, changing its status to completed or incompleted, deleting tasks swiping to the left on items and refreshing the list´s tasks pulling to refresh.
 
+**I hope you find it useful and don't hesitate to correct me for improving. Thank you!!**
+
 ### Setup to use
-This applicatioin uses a demo RestAPI that provides the common http methods in this API types. The code is stored in next github repo: 
+This applicatioin uses a demo RestAPI that provides the common http methods in this API types. The code is stored in next github repo: <br>
 Running the application will start a new service at http://127.0.0.1:8080/api/todo exposing the ToDo API which will allow us to use ToDoApp.
 
 1. Clone or download the repository ToDoApi
@@ -33,4 +35,4 @@ Running the application will start a new service at http://127.0.0.1:8080/api/to
 ___
 
 ## Spanish
-LongoToDoApp es una aplicación desarrollada con .Net MAUI y Prism MAUI como prueba de nivel para un proceso de selección para trabajar en LongoMatch. LongoToDo permite a sus usuarios tener una lista de tareas pendientes de forma que los ayude a tener una vida más organizada. Crea tareas, cambia su estado a completado o incompleto, elimina tareas deslizándolas hacia la izquierda y actualiza la lista de tareas arrastrando de ella hacia abajo.
+ToDoApp es una aplicación desarrollada con .Net MAUI y Prism MAUI para aprender y probar ambos frameworks, tanto MAUI como Prism. ToDoApp permite a sus usuarios tener una lista de tareas pendientes de forma que los ayude a tener una vida más organizada. Crea tareas, cambia su estado a completado o incompleto, elimina tareas deslizándolas hacia la izquierda y actualiza la lista de tareas arrastrando de ella hacia abajo.
