@@ -5,6 +5,7 @@ LongoToDoApp is an application developed with .Net MAUI and Prism MAUI as recrui
 ### Setup to use
 This applicatioin uses a demo RestAPI that provides the common http methods in this Api types. The code is stored in next github repo: https://github.com/fluendo/ToDoAPI
 Running the application will start a new service at http://localhost:8080/api/todo exposing the ToDo API which will allow us to use LondoToDoApp.
+
 1. Clone or download the repository ToDoApi
 2. Clone or download this repository.
 3. Run the API application
