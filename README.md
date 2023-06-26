@@ -1,10 +1,10 @@
-# LongoToDoApp
+# ToDoApp
 
-LongoToDoApp is an application developed with .Net MAUI and Prism MAUI as recruitment test for LongoMatch. LongoToDo ables to his users to list ToDo items in order to help keeping his lifes organized. Create your tasks, changing its status to completed or incompleted, deleting tasks swiping to the left on items and refreshing the list´s tasks pulling to refresh.
+LongoToDoApp is an application developed with .Net MAUI and Prism MAUI ....... ToDoApp ables to his users to list ToDo items in order to help keeping his lifes organized. Create your tasks, changing its status to completed or incompleted, deleting tasks swiping to the left on items and refreshing the list´s tasks pulling to refresh.
 
 ### Setup to use
-This applicatioin uses a demo RestAPI that provides the common http methods in this Api types. The code is stored in next github repo: https://github.com/fluendo/ToDoAPI
-Running the application will start a new service at http://localhost:8080/api/todo exposing the ToDo API which will allow us to use LondoToDoApp.
+This applicatioin uses a demo RestAPI that provides the common http methods in this API types. The code is stored in next github repo:
+Running the application will start a new service at http://127.0.0.1:8080/api/todo exposing the ToDo API which will allow us to use ToDoApp.
 
 1. Clone or download the repository ToDoApi
 2. Clone or download this repository.
@@ -26,7 +26,7 @@ Running the application will start a new service at http://localhost:8080/api/to
 
 ### More information
 - Author: [Enrique Largacha Gil](https://github.com/QuiqueLargachaGil)
-- Source  code: [LongoToDoApp](https://bitbucket.org/studyingtechnology/longotodo/src/master/)
+- Source  code: [LongoToDoApp]()
 - The UI design has been inspired by one mockup from the following list: [mockplus](https://www.mockplus.com/resource/post/25-great-to-do-list-app-ui-designs-for-your-inspiration)
 
 <br><br>
