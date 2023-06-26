@@ -1,9 +1,13 @@
-﻿namespace LongoToDoApp;
+﻿using LongoToDoApp.Helpers;
+
+namespace LongoToDoApp;
 
 public partial class App : Application
 {
 	public App()
 	{
 		InitializeComponent();
+
+		LocalizationResourceManager.Init();
 	}
 }

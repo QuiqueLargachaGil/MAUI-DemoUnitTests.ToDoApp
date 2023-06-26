@@ -2,6 +2,7 @@
 using LongoToDoApp.Infrastructure.Mappers;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
 using LongoToDoApp.Models;
+using LongoToDoApp.Resources.Translations;
 using LongoToDoApp.Services.Abstractions;
 using LongoToDoApp.Settings;
 using LongoToDoApp.ViewModels.Base;
@@ -80,13 +81,13 @@ namespace LongoToDoApp.ViewModels
         {
 			try
 			{
-				if (await DisplayAlert("LongoToDo", "Do you want to remove this item?", cancelButtonTitle: "No", acceptButtonTitle: "Yes"))
+				if (await DisplayAlert(Configuration.ApplicationName, Translations.RemoveTaskConfirmationMessage, cancelButtonTitle: Translations.No, acceptButtonTitle: Translations.Yes))
 				{
 					var request = new DeleteItemRequest(Configuration.BaseUrl, selectedItem.Key);
 					await _toDoItemsService.DeleteItem(request);
 					await LoadData();
 
-					await DisplayAlert("LongoToDo", $"{string.Format("ToDo item {0} has been deleted correctly", selectedItem.Name)}", "Ok");
+					await DisplayAlert(Configuration.ApplicationName, $"{string.Format(Translations.RemoveTaskAlertMessage, selectedItem.Name)}", Translations.Ok);
 				}
 			}
 			catch (Exception exception)

@@ -1,8 +1,10 @@
 ﻿using LongoToDoApp.Models.Exceptions;
+using LongoToDoApp.Resources.Translations;
+using LongoToDoApp.Settings;
 
 namespace LongoToDoApp.ViewModels.Base
 {
-	public class BaseViewModel : BindableBase, IInitializeAsync, INavigatedAware
+	public class BaseViewModel : BindableBase, INavigatedAware
 	{
 		private readonly IPageDialogService _dialogsService;
 
@@ -10,11 +12,6 @@ namespace LongoToDoApp.ViewModels.Base
         {
             _dialogsService = dialogsService;
         }
-
-        public virtual async Task InitializeAsync(INavigationParameters parameters)
-		{
-			await Task.Delay(0);
-		}
 
 		public void OnNavigatedFrom(INavigationParameters parameters)
 		{
@@ -50,19 +47,19 @@ namespace LongoToDoApp.ViewModels.Base
 			switch (exception)
 			{
 				case NoInternetException:
-					await DisplayAlert("Alert", exception.Message, "Ok");
+					await DisplayAlert(Configuration.ApplicationName, Translations.ExceptionNoInternet, Translations.Ok);
 					break;
 				case BadRequestException:
-					await DisplayAlert("Alert", exception.Message, "Ok");
+					await DisplayAlert(Configuration.ApplicationName, exception.Message, Translations.Ok);
 					break;
 				case ServiceUnavailableException:
-					await DisplayAlert("Alert", exception.Message, "Ok");
+					await DisplayAlert(Configuration.ApplicationName, Translations.ExceptionServiceUnabailable, Translations.Ok);
 					break;
 				case ApiException:
-					await DisplayAlert("Alert", exception.Message, "Ok");
+					await DisplayAlert(Configuration.ApplicationName, exception.Message, Translations.Ok);
 					break;
 				default:
-					await DisplayAlert("Alert", exception.Message, "Ok");
+					await DisplayAlert(Configuration.ApplicationName, exception.Message, Translations.Ok);
 					break;
 			}
 		}

@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>LongoToDoApp</ApplicationTitle>
+		<ApplicationTitle>LongoToDo</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.studyingtechnology.longotodoapp</ApplicationId>
@@ -61,12 +61,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Resources\Translations\Translations.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Translations.resx</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\CreateItemView.xaml.cs">
 	    <DependentUpon>CreateItemView.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\ToDoItemsView.xaml.cs">
 	    <DependentUpon>ToDoItemsView.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Translations\Translations.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Translations.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>

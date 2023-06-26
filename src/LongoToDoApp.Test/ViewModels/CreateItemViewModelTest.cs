@@ -33,7 +33,7 @@ namespace LongoToDoApp.Test.ViewModels
 		public void Title_Should_Be_()
 		{
 			// Assert
-			_sut.Title.Should().Be("Create new Task");//Be(Translations.CreateTaskScreenTitle);
+			_sut.Title.Should().Be("Create new Task");
 		}
 
 		[Theory]

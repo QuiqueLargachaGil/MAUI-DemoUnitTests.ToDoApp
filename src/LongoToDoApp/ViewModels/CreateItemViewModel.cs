@@ -1,5 +1,6 @@
 ﻿using LongoToDoApp.Infrastructure.Abstractions;
 using LongoToDoApp.Infrastructure.Services.ToDoItems.Models;
+using LongoToDoApp.Resources.Translations;
 using LongoToDoApp.Services.Abstractions;
 using LongoToDoApp.Settings;
 using LongoToDoApp.ViewModels.Base;
@@ -22,7 +23,7 @@ namespace LongoToDoApp.ViewModels
 			NavigateToBackCommand = new Command(async () => await NavigateToBack());
 			CreateNewItemCommand = new Command(async () => await CreateNewItem(), canExecute: () => { return !string.IsNullOrEmpty(Name); });
 
-			Title = "Create new Task";
+			Title = Translations.CreateTaskScreenTitle;
         }
 
 		public ICommand NavigateToBackCommand { get; }

@@ -5,7 +5,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:LongoToDoApp.Converters;assembly=LongoToDoApp"
-    xmlns:prism="http://prismlibrary.com">
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:translate="clr-namespace:LongoToDoApp.Extensions">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -41,7 +42,7 @@
                 <Label
                     FontAttributes="Bold"
                     FontSize="30"
-                    Text="Hello Username"
+                    Text="{translate:Translate WellcomeLbl}"
                     VerticalOptions="Center" />
                 <Label
                     FontSize="15"
@@ -49,13 +50,13 @@
                     <Label.FormattedText>
                         <FormattedString>
                             <Span
-                                Text="You have " />
+                                Text="{translate:Translate PendingTasksStartLbl}" />
                             <Span
                                 Text="{Binding NumberItems}" />
                             <Span
                                 Text=" " />
                             <Span
-                                Text="pending task/s" />
+                                Text="{translate:Translate PendingTasksEndLbl}" />
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
@@ -64,58 +65,58 @@
         <RefreshView
             Grid.Row="1"
             Command="{Binding RefreshCommand}"
-            IsRefreshing="{Binding IsBusy}">
+            IsRefreshing="{Binding IsBusy}"
+            Margin="20,20">
             <CollectionView
                 ItemsSource="{Binding ToDoItems}"
-                Margin="20,20"
                 SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <SwipeView>
                             <SwipeView.RightItems>
                                 <SwipeItemView
-                                Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference _toDoItemsPage}}"
-                                CommandParameter="{Binding .}"
-                                WidthRequest="120">
+                                    Command="{Binding Path=BindingContext.DeleteItemCommand, Source={x:Reference _toDoItemsPage}}"
+                                    CommandParameter="{Binding .}"
+                                    WidthRequest="120">
                                     <HorizontalStackLayout
-                                    BackgroundColor="#FF5555"
-                                    Padding="10,5">
+                                        BackgroundColor="#FF5555"
+                                        Padding="10,5">
                                         <Image
-                                        Aspect="AspectFill"
-                                        Source="trash_icon.png" />
+                                            Aspect="AspectFill"
+                                            Source="trash_icon.png" />
                                         <Label
-                                        FontSize="20"
-                                        Margin="5,0,0,0"
-                                        Text="Delete"
-                                        TextColor="White"
-                                        VerticalOptions="Center"/>
+                                            FontSize="20"
+                                            Margin="5,0,0,0"
+                                            Text="{translate:Translate Delete}"
+                                            TextColor="White"
+                                            VerticalOptions="Center"/>
                                     </HorizontalStackLayout>
                                 </SwipeItemView>
                             </SwipeView.RightItems>
                             <Grid
-                            ColumnDefinitions="Auto,*"
-                            RowDefinitions="Auto">
+                                ColumnDefinitions="Auto,*"
+                                RowDefinitions="Auto">
                                 <CheckBox
-                                x:Name="chkIsComplete"
-                                Grid.Column="0"
-                                Grid.Row="0"
-                                Color="#696969"
-                                IsChecked="{Binding IsComplete}"
-                                VerticalOptions="Center">
+                                    x:Name="chkIsComplete"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Color="#696969"
+                                    IsChecked="{Binding IsComplete}"
+                                    VerticalOptions="Center">
                                     <CheckBox.Behaviors>
                                         <prism:EventToCommandBehavior
-                                        EventName="CheckedChanged"
-                                        Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"
-                                        CommandParameter="{Binding .}"/>
+                                            EventName="CheckedChanged"
+                                            Command="{Binding Path=BindingContext.CheckedCommand, Source={x:Reference _toDoItemsPage}}"
+                                            CommandParameter="{Binding .}"/>
                                     </CheckBox.Behaviors>
                                 </CheckBox>
                                 <Label
-                                Grid.Column="1"
-                                Grid.Row="0"
-                                FontSize="20"
-                                Text="{Binding Name}"
-                                TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
-                                VerticalOptions="Center" />
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    FontSize="20"
+                                    Text="{Binding Name}"
+                                    TextColor="{Binding Path=IsChecked, Source={Reference chkIsComplete}, Converter={StaticResource boolToTextColorConverter}}"
+                                    VerticalOptions="Center" />
                             </Grid>
                         </SwipeView>
                     </DataTemplate>
@@ -127,7 +128,8 @@
             BackgroundColor="#19C0B8"
             Command="{Binding NavigateToCreateItemCommand}"
             CornerRadius="0"
-            Text="New"
+            Text="{translate:Translate New}"
+            TextColor="White"
             VerticalOptions="EndAndExpand" />
     </Grid>
 </ContentPage>
