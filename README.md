@@ -26,7 +26,7 @@ Running the application will start a new service at http://127.0.0.1:8080/api/to
 
 ### More information
 - Author: [Enrique Largacha Gil](https://github.com/QuiqueLargachaGil)
-- Source  code: [LongoToDoApp](https://github.com/QuiqueLargachaGil/MAUI-Demo.ToDoApp)
+- Source  code: [ToDoApp](https://github.com/QuiqueLargachaGil/MAUI-Demo.ToDoApp)
 - The UI design has been inspired by one mockup from the following list: [mockplus](https://www.mockplus.com/resource/post/25-great-to-do-list-app-ui-designs-for-your-inspiration)
 
 <br><br>
